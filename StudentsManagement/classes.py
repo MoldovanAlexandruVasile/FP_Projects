@@ -29,6 +29,14 @@ class Student:
         
         return self.__name
 
+    def __str__(self):
+
+        '''
+        Returns a string with student ID and his name
+        '''
+
+        return "Student ID: " + str(self.__studentID) + "    Student name: " + str(self.__name)
+
 
 class Discipline:
 
@@ -61,6 +69,14 @@ class Discipline:
         '''
         
         return self.__name
+
+    def __str__(self):
+
+        '''
+        Returns a string with discipline ID and discipline name
+        '''
+
+        return "Discipline ID: " + str(self.__disciplineID) + "    Discipline name: " + str(self.__name)
 
 
 class Grade:
@@ -102,3 +118,11 @@ class Grade:
         '''
         
         return self.__gradeValue
+
+    def __str__(self):
+
+        '''
+        Returns a string with discipline ID, student ID and grade value
+        '''
+
+        return "Discipline ID: " + str(self.__disciplineID) + "    Student ID: " + str(self.__studentID) + "    Grade value: " + str(self.__gradeValue)

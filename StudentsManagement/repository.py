@@ -13,6 +13,7 @@ class Repository:
         '''
 
         self._data = []
+        self._undo = []
 
     def find(self, item):
 
@@ -26,6 +27,31 @@ class Repository:
                 return i
                 k = k + 1
         if k == 0: return 0
+
+    def findName(self, item):
+
+        '''
+        Check for the position of an item
+        '''
+
+        k = 0
+        for i in self._data:
+            if item in i.getName():
+                return i
+                k = k + 1
+        if k == 0: return 0
+
+    def findIDWithName(self, name):
+
+        for i in self._data:
+            if name == i.getName():
+                return i.getID()
+
+    def findNameWithID(self, ID):
+
+        for i in self._data:
+            if ID == i.getID():
+                return i.getName()
 
     def add(self, item):
 
@@ -52,11 +78,12 @@ class Repository:
         Replace an item in the repository
         item - the object which will be updated
         '''
-        
+
         itm = self.find(item.getID())
         pos = self._data.index(itm)
         self._data.remove(itm)
         self._data.insert(pos, item)
+
 
     def __len__(self):
         
@@ -66,14 +93,23 @@ class Repository:
         
         return len(self.__data)
 
-    def list(self):
+    def listByID(self, item):
 
         '''
-        Prints the repository
+        Prints the items with the ID item
         '''
-        
+
         for i in self._data:
-            print('\n     ',i.getID(),' ',i.getName())
+            if item == i.getID(): print('\n     ID: ',i.getID(),'    Name: ',i.getName())
+
+    def listByName(self, item):
+
+        '''
+        Prints the items with the name item
+        '''
+
+        for i in self._data:
+            if item in i.getName(): print('\n     ID: ',i.getID(),'    Name: ',i.getName())
     
     def getAll(self):
 
@@ -91,14 +127,15 @@ class Repository:
         
         s = ''
         for i in self._data:
-            s += str(i) + "\n"
+            s += str(i)
+            s += "\n"
         return s
 
 
 class gradeRepository():
 
     '''
-    The class graeRepository stores the data of Grade class
+    The class gradeRepository stores the data of Grade class
     '''
 
     def __init__(self):
@@ -141,16 +178,15 @@ class gradeRepository():
         for i in self._data:
             if ID == i.getDisciplineID():
                 self._data.remove(i)
-                    
-    def list(self):
 
-        '''
-        Prints the repository
-        '''
-        
+    def findByDisciplineID(self, ID):
+
+        list = []
         for i in self._data:
-            print('\n     ',i.getDisciplineID(),' ',i.getStudentID(),' ',i.getGradeValue())
-    
+            if ID == i.getDisciplineID():
+                list.append(i.getStudentID())
+        return list
+
     def getAll(self):
 
         '''
@@ -175,5 +211,6 @@ class gradeRepository():
         
         s = ''
         for i in self._data:
-            s += str(i) + "\n"
+            s += str(i)
+            s += "\n"
         return s

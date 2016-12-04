@@ -1,5 +1,7 @@
 from repository import *
 from classes import *
+from aboutGrades import *
+from Statistics import *
 
        
 class UI:
@@ -16,10 +18,18 @@ class UI:
         string += "\n \t 5. Update a student."
         string += "\n \t 6. Update a discipline."
         string += "\n \t 7. Add a grade."
-        string += "\n \t 8. Search."
-        string += "\n \t 9. Redo."
-        string += "\n \t 10. Undo."
-        string += "\n \t 11. Print content"
+        string += "\n \t 8. Search a student by ID."
+        string += "\n \t 9. Search a student by name."
+        string += "\n \t 10. Search a discipline by ID."
+        string += "\n \t 11. Search a discipline by name."
+        string += "\n \t 12. Sort students enroled at a discipline alphabetically."
+        string += "\n \t 13. Sort students by descending order of average grade."
+        string += "\n \t 14. Students failing at a discipline."
+        string += "\n \t 15. Students with the best school situation."
+        string += "\n \t 16. Disciplines with at least one grade."
+        string += "\n \t 17. Redo."
+        string += "\n \t 18. Undo."
+        string += "\n \t 19. Print content."
         string += "\n \t 0. Exit."
         print(string)
 
@@ -44,18 +54,26 @@ class UI:
         discipline.add(Discipline(2, 'Informatica'))
         discipline.add(Discipline(3, 'Fundamentele Programarii'))
         discipline.add(Discipline(4, 'Assembly'))
+        discipline.add(Discipline(5, 'Sport'))
 
         grade.add(Grade(1, 2172, 10))
-        grade.add(Grade(2, 51, 8))
-        grade.add(Grade(1, 315, 9))
+        grade.add(Grade(1, 102, 10))
+        grade.add(Grade(2, 51, 3))
+        grade.add(Grade(1, 315, 2))
         grade.add(Grade(3, 523, 6))
         grade.add(Grade(4, 102, 10))
+        grade.add(Grade(2, 2172, 10))
+        grade.add(Grade(1, 523, 4))
+
         
         command = -1
 
         U = UI()
 
         while command != 0:
+
+            x = GradesController(student, discipline, grade)
+            statistics = Statistics(x)
 
             U.printMenu()
             
@@ -78,14 +96,14 @@ class UI:
                 except: pass
 
             elif command == '3':           
-                x = U.readStudent()
+                x = U.readStudentID()
                 if student.find(x.getID()) != 0:
                     student.remove(x.getID())
                     grade.removeByStudent(x.getID())
                 else: print("\n The student does not exist !")
 
             elif command == '4':
-                x = U.readDiscipline()
+                x = U.readDisciplineID()
                 if discipline.find(x.getID()) != 0:
                     grade.removeByDiscipline(x.getID())
                     discipline.remove(x.getID())
@@ -93,14 +111,12 @@ class UI:
 
             elif command == '5':
                 x = U.readStudent()
-                if student.find(x.getID()) != 0:
-                    student.update(x)
+                if student.find(x.getID()) != 0: student.update(x)
                 else: print("\n The student does not exist !")
                 
             elif command == '6':
                 x = U.readDiscipline()
-                if discipline.find(x.getID()) != 0:
-                    discipline.update(x)
+                if discipline.find(x.getID()) != 0: discipline.update(x)
                 else: print("\n The discipline does not exist !")
                 
             elif command == '7':
@@ -109,22 +125,53 @@ class UI:
                     grade.add(x)
                 else: print("\n Invalid data !")
 
-            elif command == '8': pass
+            elif command == '8':
+                x = U.readStudentID()
+                if student.find(x.getID()) != 0: student.listByID(x.getID())
+                else: print("\n Invalid data !")
 
-            elif command == '9': pass
+            elif command == '9':
+                x = U.readStudentName()
+                if student.findName(x.getName()) != 0: student.listByName(x.getName())
+                else: print("\n Invalid data !")
 
-            elif command == '10': pass
+            elif command == '10':
+                x = U.readDisciplineID()
+                if discipline.find(x.getID()) != 0: discipline.listByID(x.getID())
+                else: print("\n Invalid data !")
 
             elif command == '11':
-                print("\n \t  ~Student list~ \n")
-                student.list()
-                print("\n =============================================== \n")
-                print("\n \t ~Discipline list~ \n")
-                discipline.list()
-                print("\n =============================================== \n")
-                print("\n \t   ~Grade list~ \n")
-                grade.list()
-                print("\n =============================================== \n")
+                x = U.readDisciplineName()
+                if discipline.findName(x.getName()) != 0: discipline.listByName(x.getName())
+                else: print("\n Invalid data !")
+
+
+            elif command == '12': print(statistics.sortAlphabetically())
+
+            elif command == '13': print(statistics.sortAverageGrade())
+
+            elif command == '14': print(statistics.failing())
+
+            elif command == '15': print(statistics.bestSchoolSituation())
+
+            elif command == '16': print(statistics.oneGrade())
+
+            elif command == '17': pass
+
+            elif command == '18': pass
+
+            elif command == '19':
+                print("\n \t      ~Student list~ \n")
+                print(str(student))
+                print("\n ==================================================== \n")
+                print("\n \t     ~Discipline list~ \n")
+                print(str(discipline))
+                print("\n ==================================================== \n")
+                print("\n \t       ~Grade list~ \n")
+                print(str(grade))
+                print("\n ==================================================== \n")
+
+            else: print("\n Invalid data !")
 
     def readStudent(self):
 
@@ -162,4 +209,44 @@ class UI:
             grade = int(input("\n \t Grade: "))
             if grade < 1 or grade > 10: raise ValueError
             return Grade(dID, sID, grade)
-        except ValueError: print("\n Invalid data")
+        except ValueError: print("\n Invalid data !")
+
+    def readStudentID(self):
+
+        '''
+        Reads a student
+        '''
+
+        try:
+            ID = int(input("\n \t Student ID: "))
+            return Student(ID, '')
+        except ValueError: print("\n Invalid data !")
+
+    def readStudentName(self):
+
+        '''
+        Reads a discipline
+        '''
+
+        name = input("\n \t Student name: ")
+        return Student(0, name)
+
+    def readDisciplineID(self):
+
+        '''
+        Reads a student
+        '''
+
+        try:
+            ID = int(input("\n \t Discipline ID: "))
+            return Discipline(ID, '')
+        except ValueError: print("\n Invalid data !")
+
+    def readDisciplineName(self):
+
+        '''
+        Reads a discipline
+        '''
+
+        name = input("\n \t Discipline name: ")
+        return Discipline(0, name)
