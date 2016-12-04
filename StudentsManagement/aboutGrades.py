@@ -8,6 +8,10 @@ class GradesController(object):
 
     def sortAlphabetically(self):
 
+        '''
+        Creates a list of students sorted alphabetically enroled at a given discipline.
+        ''' 
+
         try:
             ID = int(input("\n \t \t Discipline ID: "))
             list = self.__grades.findByDisciplineID(ID)
@@ -21,6 +25,10 @@ class GradesController(object):
         except ValueError: pass
 
     def sortAverageGrade(self):
+
+        '''
+        Creates a list of students sorted > by grade average
+        '''
 
         list = []
 
@@ -41,6 +49,12 @@ class GradesController(object):
 
     def failing(self):
 
+        '''
+        Creates a list of lists. The lists from the lists are made of student ID
+        and student name. This list will contain the students that are failing
+        at a discipline
+        ''' 
+
         list = []
         list2 = []
 
@@ -58,6 +72,12 @@ class GradesController(object):
 
     def bestSchoolSituation(self):
 
+        '''
+        Creates a list of lists. The lists from the lists are made of average grade
+        and student name. This list will contain the students with best school
+        situation
+        '''
+
         list = []
 
         for i in self.__students.getAll():
@@ -67,13 +87,17 @@ class GradesController(object):
                 if j.getStudentID() == i.getID():
                     avg += j.getGradeValue()
                     k += 1.0
-            if avg != 0.0:
+            if avg >= 5.0:
                 list.append([float(avg / k), i.getName()])
 
         list.sort(reverse=True)
         return list
 
     def oneGrade(self):
+
+        '''
+        Creates a list. The list is made of disciplines sorted alphabetically
+        '''
 
         list = []
 
@@ -86,7 +110,7 @@ class GradesController(object):
                     k += 1.0
 
             if k != 0.0:
-                list.append([float(avg / k), i.getName()])
+                list.append(i.getName())
 
-        list.sort(reverse=True)
+        list.sort()
         return list

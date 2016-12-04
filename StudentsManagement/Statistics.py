@@ -6,12 +6,20 @@ class Statistics(object):
 
     def sortAlphabetically(self):
 
+        '''
+        Creates a string of the list of students ordered alphabetically
+        '''
+
         s = ""
         for i in self.__aboutGrades.sortAlphabetically():
             s += "\n \t" + i
         return s
 
     def sortAverageGrade(self):
+
+        '''
+        Creates a string of the list of students sorted by average grade
+        ''' 
 
         s = "\n"
         for i in self.__aboutGrades.sortAverageGrade():
@@ -20,12 +28,21 @@ class Statistics(object):
 
     def failing(self):
 
+        '''
+        Creates a string of the list of the students that are failing
+        at a discipline
+        '''
+
         s = '\n'
         for i in self.__aboutGrades.failing():
             s += "\t" + str(i[1]) + "      ID: " + str(i[0]) + '\n'
         return s
 
     def bestSchoolSituation(self):
+
+        '''
+        Creates a string of the list of students with the best school situation
+        '''
 
         s = '\n'
         for i in self.__aboutGrades.bestSchoolSituation():
@@ -34,7 +51,11 @@ class Statistics(object):
 
     def oneGrade(self):
 
+        '''
+        Creates a string of the list of discipline where is at least one grade
+        '''
+
         s = '\n'
         for i in self.__aboutGrades.oneGrade():
-            s += "\t" + str(i[1]) + '\n'
+            s += "\t" + str(i) + '\n'
         return s
