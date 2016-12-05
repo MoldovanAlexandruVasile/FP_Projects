@@ -91,7 +91,7 @@ class Repository:
         The length of the list
         """
         
-        return len(self.__data)
+        return len(self._data)
 
     def listByID(self, item):
 

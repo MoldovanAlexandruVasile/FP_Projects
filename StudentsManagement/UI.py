@@ -72,7 +72,7 @@ class UI:
 
         while command != 0:
 
-            x = GradesController(student, discipline, grade)
+            x = aboutGrades(student, discipline, grade)
             statistics = Statistics(x)
 
             U.printMenu()
@@ -121,13 +121,16 @@ class UI:
                 
             elif command == '7':
                 x = U.readGrade()
-                if student.find(x.getStudentID()) != 0 and discipline.find(x.getDisciplineID()) != 0:
-                    grade.add(x)
+                if x.getGradeValue() >= 1 and x.getGradeValue() <= 10:
+                    if student.find(x.getStudentID()) != 0 and discipline.find(x.getDisciplineID()) != 0:
+                        grade.add(x)
+                    else: print("\n Invalid data !")
                 else: print("\n Invalid data !")
 
             elif command == '8':
                 x = U.readStudentID()
-                if student.find(x.getID()) != 0: student.listByID(x.getID())
+                if x.getID() != 0:
+                    if student.find(x.getID()) != 0: student.listByID(x.getID())
                 else: print("\n Invalid data !")
 
             elif command == '9':
@@ -137,7 +140,9 @@ class UI:
 
             elif command == '10':
                 x = U.readDisciplineID()
-                if discipline.find(x.getID()) != 0: discipline.listByID(x.getID())
+                if x.getID() != 0:
+                    if discipline.find(x.getID()) != 0: discipline.listByID(x.getID())
+                    else: print("\n Invalid data !")
                 else: print("\n Invalid data !")
 
             elif command == '11':
@@ -173,6 +178,7 @@ class UI:
 
             else: print("\n Invalid data !")
 
+
     def readStudent(self):
 
         '''
@@ -183,7 +189,7 @@ class UI:
             ID = int(input("\n \t Student ID: "))
             name = input("\n \t Student name: ")
             return Student(ID, name)
-        except ValueError: print("\n Invalid data !")
+        except ValueError: return Student(0,'')
         
     def readDiscipline(self):
 
@@ -195,7 +201,7 @@ class UI:
             ID = int(input("\n \t Discipline ID: "))
             name = input("\n \t Discipline name: ")
             return Discipline(ID, name)
-        except ValueError: print("\n Invalid data !")
+        except ValueError: return Discipline(0, '')
 
     def readGrade(self):
 
@@ -207,9 +213,8 @@ class UI:
             dID = int(input("\n \t Discipline ID: "))
             sID = int(input("\n \t Student ID: "))
             grade = int(input("\n \t Grade: "))
-            if grade < 1 or grade > 10: raise ValueError
             return Grade(dID, sID, grade)
-        except ValueError: print("\n Invalid data !")
+        except ValueError: return Grade(0,0,0)
 
     def readStudentID(self):
 
@@ -220,7 +225,7 @@ class UI:
         try:
             ID = int(input("\n \t Student ID: "))
             return Student(ID, '')
-        except ValueError: print("\n Invalid data !")
+        except ValueError: return Student(0, '')
 
     def readStudentName(self):
 
@@ -240,7 +245,7 @@ class UI:
         try:
             ID = int(input("\n \t Discipline ID: "))
             return Discipline(ID, '')
-        except ValueError: print("\n Invalid data !")
+        except ValueError: return Discipline(0, '')
 
     def readDisciplineName(self):
 

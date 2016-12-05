@@ -1,4 +1,6 @@
-class Statistics(object):
+from aboutGrades import *
+
+class Statistics():
 
     def __init__(self, aboutGrades):
 

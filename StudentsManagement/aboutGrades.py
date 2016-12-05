@@ -1,10 +1,10 @@
-class GradesController(object):
+class aboutGrades():
 
-    def __init__(self, Students, Disciplines, Grades):
+    def __init__(self, student, discipline, grade):
 
-        self.__students = Students
-        self.__disciplines = Disciplines
-        self.__grades = Grades
+        self.__students = student
+        self.__disciplines = discipline
+        self.__grades = grade
 
     def sortAlphabetically(self):
 
@@ -33,13 +33,13 @@ class GradesController(object):
         list = []
 
         for i in self.__students.getAll():
-            k = 0.0
-            avg = 0.0
+            k = 0
+            avg = 0
             for j in self.__grades.getAll():
                 if j.getStudentID() == i.getID():
-                    avg += j.getGradeValue()
-                    k += 1.0
-            if avg != 0.0:
+                    avg = avg + j.getGradeValue()
+                    k = k + 1
+            if avg != 0:
                 list.append([float(avg / k), i.getName()])
             else:
                 list.append([0.0, i.getName()])
@@ -81,13 +81,13 @@ class GradesController(object):
         list = []
 
         for i in self.__students.getAll():
-            k = 0.0
-            avg = 0.0
+            k = 0
+            avg = 0
             for j in self.__grades.getAll():
                 if j.getStudentID() == i.getID():
-                    avg += j.getGradeValue()
-                    k += 1.0
-            if avg >= 5.0:
+                    avg = avg + j.getGradeValue()
+                    k = k + 1
+            if avg >= 5:
                 list.append([float(avg / k), i.getName()])
 
         list.sort(reverse=True)
@@ -102,14 +102,14 @@ class GradesController(object):
         list = []
 
         for i in self.__disciplines.getAll():
-            k = 0.0
-            avg = 0.0
+            k = 0
+            avg = 0
             for j in self.__grades.getAll():
                 if i.getID() == j.getDisciplineID():
-                    avg += j.getGradeValue()
-                    k += 1.0
+                    avg = avg + j.getGradeValue()
+                    k = k + 1
 
-            if k != 0.0:
+            if k != 0:
                 list.append(i.getName())
 
         list.sort()
