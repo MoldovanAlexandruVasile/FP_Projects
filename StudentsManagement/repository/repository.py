@@ -1,8 +1,8 @@
-from classes import *
+from domain.classes import *
 
 class Repository:
 
-    '''
+    '''s
     The class Repository stores the data of Student and Discipline class
     '''
 
@@ -13,7 +13,6 @@ class Repository:
         '''
 
         self._data = []
-        self._undo = []
 
     def find(self, item):
 
@@ -24,8 +23,8 @@ class Repository:
         k = 0
         for i in self._data:
             if item == i.getID():
-                return i
                 k = k + 1
+                return i
         if k == 0: return 0
 
     def findName(self, item):
@@ -37,17 +36,29 @@ class Repository:
         k = 0
         for i in self._data:
             if item in i.getName():
-                return i
                 k = k + 1
+                return i
         if k == 0: return 0
 
     def findIDWithName(self, name):
+
+        '''
+        Fidns the ID of an object with the name
+        :param name: the object name
+        :return: the object ID
+        '''
 
         for i in self._data:
             if name == i.getName():
                 return i.getID()
 
     def findNameWithID(self, ID):
+
+        '''
+        Finds the name of an object with the ID
+        :param name: the object ID
+        :return: the object name
+        '''
 
         for i in self._data:
             if ID == i.getID():
@@ -69,8 +80,9 @@ class Repository:
         item - the item which will be removed
         '''
 
-        itm = self.find(item)
-        self._data.remove(itm)
+        for i in self._data:
+            if i.getID() == item:
+                self._data.remove(i)
 
     def update(self, item):
 
@@ -100,7 +112,7 @@ class Repository:
         '''
 
         for i in self._data:
-            if item == i.getID(): print('\n     ID: ',i.getID(),'    Name: ',i.getName())
+            if item == i.getID(): print('     ID: ',i.getID(),'    Name: ',i.getName())
 
     def listByName(self, item):
 
@@ -109,15 +121,15 @@ class Repository:
         '''
 
         for i in self._data:
-            if item in i.getName(): print('\n     ID: ',i.getID(),'    Name: ',i.getName())
-    
+            if item in i.getName(): print('     ID: ',i.getID(),'    Name: ',i.getName())
+
     def getAll(self):
 
         '''
         Returns the repository
         '''
         
-        return self._data;
+        return self._data
 
     def __str__(self):
 
@@ -127,8 +139,7 @@ class Repository:
         
         s = ''
         for i in self._data:
-            s += str(i)
-            s += "\n"
+            s += str(i) + "\n"
         return s
 
 
@@ -211,6 +222,5 @@ class gradeRepository():
         
         s = ''
         for i in self._data:
-            s += str(i)
-            s += "\n"
+            s += str(i) + "\n"
         return s

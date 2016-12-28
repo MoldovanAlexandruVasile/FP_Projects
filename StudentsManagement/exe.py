@@ -1,8 +1,8 @@
-from classes import *
-from UI import *
-from repository import *
-from aboutGrades import *
-from Statistics import *
+from domain.classes import *
+from ui.UI import *
+from repository.repository import *
+from controller.statisticController import *
+from controller.Statistics import *
 
 U = UI()
 

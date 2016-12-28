@@ -1,7 +1,6 @@
 import unittest
-from classes import *
-from repository import *
-
+from domain.classes import *
+from repository.repository import *
 
 class MyTestCase(unittest.TestCase):
 
@@ -71,6 +70,12 @@ class MyTestCase(unittest.TestCase):
         assert len(student) == 10
         assert len(discipline) == 6
         assert len(grade) == 6
+        x = Discipline(1, 'Matematica')
+        discipline.remove(x.getID())
+        grade.removeByDiscipline(x.getID())
+        assert len(student) == 10
+        assert len(discipline) == 5
+        assert len(grade) == 3
 
         #Update
         x = Student(2172, 'Moldovan Alexandru')

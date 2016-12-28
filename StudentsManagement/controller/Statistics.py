@@ -1,6 +1,6 @@
-from aboutGrades import *
+from controller.statisticController import *
 
-class Statistics():
+class Statistics:
 
     def __init__(self, aboutGrades):
 
@@ -59,5 +59,5 @@ class Statistics():
 
         s = '\n'
         for i in self.__aboutGrades.oneGrade():
-            s += "\t" + str(i) + '\n'
+            s += "\t" + 'ID: ' + str(i[0]) + '    Discipline name: ' + str(i[1]) + '\n'
         return s

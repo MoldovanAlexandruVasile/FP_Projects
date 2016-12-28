@@ -1,0 +1,5 @@
+1, Matematica
+2, Informatica
+3, Fundamentele Programarii
+4, Assembly
+5, Sport
