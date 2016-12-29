@@ -10,12 +10,12 @@ class repositoryController:
     def add(self, item):
         self.__repository.add(item)
         redo = FunctionCall(self.add, item)
-        undo = FunctionCall(self.remove, item.getID())
+        undo = FunctionCall(self.remove, item)
         operation = Operation(redo, undo)
         self.__undoController.recordOperation(operation)
 
     def update(self, item):
-        previous = self.__repository.find(item.getID())
+        previous = self.__repository.find(item)
         self.__repository.update(item)
         redo = FunctionCall(self.update, item)
         undo = FunctionCall(self.update, previous)
@@ -23,7 +23,7 @@ class repositoryController:
         self.__undoController.recordOperation(operation)
 
     def remove(self, item):
-        previous = self.__repository.find(item.getID())
+        previous = self.__repository.find(item)
         list = self.__gradesRepository.getStudentGrades(item)
         self.__gradesRepository.removeByStudent(item)
         redo = FunctionCall(self.remove, item)

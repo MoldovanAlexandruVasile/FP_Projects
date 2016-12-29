@@ -51,7 +51,7 @@ class UI:
 
         U = UI()
 
-        U.readFromFiles(student, discipline, grade)
+        U.readFromFiles(student, discipline, grade,undoController)
 
         k = 0
 
@@ -276,13 +276,14 @@ class UI:
         name = input("\n \t Discipline name: ")
         return Discipline(0, name)
 
-    def readFromFiles(self, student, discipline, grade):
+    def readFromFiles(self, student, discipline, grade,undo):
 
         '''
         This function reads from files students, disciplines and grades, and add them into
         students, disciplines and grades repositories
         '''
 
+        undo.newOperation()
         studentFile = open("Students.txt", 'r')
         line = studentFile.readline().strip()
         while line != "":
