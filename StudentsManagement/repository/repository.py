@@ -198,6 +198,13 @@ class gradeRepository():
                 list.append(i.getStudentID())
         return list
 
+    def getStudentGrades(self, ID):
+        list = []
+        for i in self._data:
+            if i.getStudentID() == ID:
+                list.append(i)
+        return list
+
     def getAll(self):
 
         '''

@@ -53,22 +53,22 @@ class undo:
         return True
 
 
-    class FunctionCall:
-        def __init__(self, functionRef, *parameters):
-            self._functionRef = functionRef
-            self._parameters = parameters
+class FunctionCall:
+    def __init__(self, functionRef, *parameters):
+        self._functionRef = functionRef
+        self._parameters = parameters
 
-        def call(self):
-            self._functionRef(*self._parameters)
+    def call(self):
+        self._functionRef(*self._parameters)
 
 
-    class Operation:
-        def __init__(self, functionDo, functionUndo):
-            self._functionDo = functionDo
-            self._functionUndo = functionUndo
+class Operation:
+    def __init__(self, functionDo, functionUndo):
+        self._functionDo = functionDo
+        self._functionUndo = functionUndo
 
-        def undo(self):
-            self._functionUndo.call()
+    def undo(self):
+        self._functionUndo.call()
 
-        def redo(self):
-            self._functionDo.call()
+    def redo(self):
+        self._functionDo.call()

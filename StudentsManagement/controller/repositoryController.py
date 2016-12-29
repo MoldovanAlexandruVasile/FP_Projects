@@ -1,17 +1,40 @@
 from repository.repository import *
+from controller.undoController import *
 
 class repositoryController:
-    def __init__(self, repository):
+    def __init__(self, repository, undoController, gradesRepository):
         self.__repository = repository
+        self.__undoController = undoController
+        self.__gradesRepository = gradesRepository
 
     def add(self, item):
         self.__repository.add(item)
+        redo = FunctionCall(self.add, item)
+        undo = FunctionCall(self.remove, item.getID())
+        operation = Operation(redo, undo)
+        self.__undoController.recordOperation(operation)
 
     def update(self, item):
+        previous = self.__repository.find(item.getID())
         self.__repository.update(item)
+        redo = FunctionCall(self.update, item)
+        undo = FunctionCall(self.update, previous)
+        operation = Operation(redo, undo)
+        self.__undoController.recordOperation(operation)
 
     def remove(self, item):
-        self.__repository.remove(item)
+        previous = self.__repository.find(item.getID())
+        list = self.__gradesRepository.getStudentGrades(item)
+        self.__gradesRepository.removeByStudent(item)
+        redo = FunctionCall(self.remove, item)
+        undo = FunctionCall(self.add, previous)
+        operation = Operation(redo, undo)
+        self.__undoController.recordOperation(operation)
+        for i in list:
+            redo = FunctionCall(self.__gradesRepository.remove, i)
+            undo = FunctionCall(self.__gradesRepository.add, i)
+            operation = Operation(redo, undo)
+            self.__undoController.recordOperation(operation)
 
     def find(self, item):
         return self.__repository.find(item)
@@ -66,3 +89,6 @@ class gradeRepositoryController:
 
     def __str__(self):
         return str(self.__repository)
+
+    def __len__(self):
+        return len(self.__repository)

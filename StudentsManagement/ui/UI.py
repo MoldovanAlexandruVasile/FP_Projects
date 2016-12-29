@@ -3,6 +3,7 @@ from controller.repositoryController import *
 from domain.classes import *
 from controller.statisticController import *
 from controller.Statistics import *
+from controller.undoController import *
 
 class UI:
 
@@ -40,9 +41,11 @@ class UI:
         disciplineRepo = Repository()
         gradeRepo = gradeRepository()
 
-        student = repositoryController(studentRepo)
-        discipline = repositoryController(disciplineRepo)
+        undoController = undo()
+        student = repositoryController(studentRepo, undoController, gradeRepo)
+        discipline = repositoryController(disciplineRepo, undoController, gradeRepo)
         grade = gradeRepositoryController(gradeRepo)
+
 
         command = -1
 
@@ -71,6 +74,7 @@ class UI:
                 x = U.readStudent()
                 try:
                     if student.find(x.getID()) == 0:
+                        undoController.newOperation()
                         student.add(x)
                         print("\n \t The student has been added !")
                     else: print("\n Student already exists !")
@@ -80,6 +84,7 @@ class UI:
                 x = U.readDiscipline()
                 try:
                     if discipline.find(x.getID()) == 0:
+                        undoController.newOperation()
                         discipline.add(x)
                         print("\n \t The discipline has been added !")
                     else: print("\n Discipline already exists !")
@@ -88,6 +93,7 @@ class UI:
             elif command == '3':           
                 x = U.readStudentID()
                 if student.find(x.getID()) != 0:
+                    undoController.newOperation()
                     student.remove(x.getID())
                     grade.removeByStudent(x.getID())
                     print("\n \t The student has been removed !")
@@ -96,6 +102,7 @@ class UI:
             elif command == '4':
                 x = U.readDisciplineID()
                 if discipline.find(x.getID()) != 0:
+                    undoController.newOperation()
                     grade.removeByDiscipline(x.getID())
                     discipline.remove(x.getID())
                     print("\n \t The discipline has been removed !")
@@ -104,6 +111,7 @@ class UI:
             elif command == '5':
                 x = U.readStudent()
                 if student.find(x.getID()) != 0:
+                    undoController.newOperation()
                     student.update(x)
                     print("\n \t Updated !")
                 else: print("\n The student does not exist !")
@@ -111,6 +119,7 @@ class UI:
             elif command == '6':
                 x = U.readDiscipline()
                 if discipline.find(x.getID()) != 0:
+                    undoController.newOperation()
                     discipline.update(x)
                     print("\n \t Updated !")
                 else: print("\n The discipline does not exist !")
@@ -119,6 +128,7 @@ class UI:
                 x = U.readGrade()
                 if x.getGradeValue() >= 1 and x.getGradeValue() <= 10:
                     if student.find(x.getStudentID()) != 0 and discipline.find(x.getDisciplineID()) != 0:
+                        undoController.newOperation()
                         grade.add(x)
                         print("\n \t Grade has been added !")
                     else: print("\n Invalid data !")
@@ -167,9 +177,9 @@ class UI:
 
             elif command == '16': print(statistics.oneGrade())
 
-            elif command == '17': pass
+            elif command == '17': undoController.redo()
 
-            elif command == '18': pass
+            elif command == '18': undoController.undo()
 
             elif command == '19':
                 print("\n \t         ~Student list~ \n")
