@@ -9,10 +9,8 @@ class undo:
         if self.isRecorded() == True:
             self._operations[-1].append(operation)
 
-
     def isRecorded(self):
         return self._recorded
-
 
     def newOperation(self):
         if self.isRecorded() == False:
@@ -21,7 +19,6 @@ class undo:
         self._operations = self._operations[0:self._index + 1]
         self._operations.append([])
         self._index += 1
-
 
     def undo(self):
         if self._index < 0:
@@ -37,7 +34,6 @@ class undo:
         self._index -= 1
         return True
 
-
     def redo(self):
         if self._index >= len(self._operations) - 1:
             return False
@@ -49,7 +45,6 @@ class undo:
             oper.redo()
 
         self._recorded = True
-
         return True
 
 

@@ -44,7 +44,7 @@ class UI:
         undoController = undo()
         student = repositoryController(studentRepo, undoController, gradeRepo)
         discipline = repositoryController(disciplineRepo, undoController, gradeRepo)
-        grade = gradeRepositoryController(gradeRepo)
+        grade = gradeRepositoryController(gradeRepo, studentRepo, disciplineRepo, undoController)
 
 
         command = -1
@@ -177,9 +177,17 @@ class UI:
 
             elif command == '16': print(statistics.oneGrade())
 
-            elif command == '17': undoController.redo()
+            elif command == '17':
+                if undoController._index <= len(undoController._operations) - 2:
+                    undoController.redo()
+                    print("\n \t Redo done !")
+                else: print("\n \t You can't redo !")
 
-            elif command == '18': undoController.undo()
+            elif command == '18':
+                if undoController._index != 0:
+                    undoController.undo()
+                    print("\n \t Undo done !")
+                else: print("\n \t You can't undo !")
 
             elif command == '19':
                 print("\n \t         ~Student list~ \n")

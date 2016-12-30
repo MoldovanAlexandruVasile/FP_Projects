@@ -2,7 +2,7 @@ from domain.classes import *
 
 class Repository:
 
-    '''s
+    '''
     The class Repository stores the data of Student and Discipline class
     '''
 
