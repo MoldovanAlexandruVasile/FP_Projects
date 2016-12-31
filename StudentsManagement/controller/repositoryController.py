@@ -8,6 +8,13 @@ class repositoryController:
         self.__grades = grades
 
     def add(self, item):
+
+        '''
+        This function adds the new object to the repository
+        Also prepares the undo and redo functions
+        :param item: object which we want to add
+        '''
+
         self.__repository.add(item)
         redo = FunctionCall(self.add, item)
         undo = FunctionCall(self.remove, item.getID())
@@ -15,7 +22,14 @@ class repositoryController:
         self.__undoController.recordOperation(operation)
 
     def update(self, item):
-        previous = self.__repository.find(item)
+
+        '''
+        This funcion updates an object
+        Also prepares the undo and redo functions
+        :param item: object we want to update
+        '''
+
+        previous = self.__repository.find(item.getID())
         self.__repository.update(item)
         redo = FunctionCall(self.update, item)
         undo = FunctionCall(self.update, previous)
@@ -23,6 +37,13 @@ class repositoryController:
         self.__undoController.recordOperation(operation)
 
     def remove(self, item):
+
+        '''
+        This function removes an object from the repo
+        Also prepares undo and redo functions
+        :param item: The object ID
+        '''
+
         previous = self.__repository.find(item)
         self.__repository.remove(item)
         list = self.__grades.getStudentGrades(item)
@@ -37,24 +58,71 @@ class repositoryController:
             self.__undoController.recordOperation(operation)
 
     def find(self, item):
+
+        '''
+        Check the position of the item
+        :param item: The ID of the item we are looking for
+        :return: The position of the item
+        '''
+
         return self.__repository.find(item)
 
     def findName(self,item):
+
+        '''
+        Check the position of the item
+        :param item: The name of the item we are looking for
+        :return: The position of the item
+        '''
+
         return self.__repository.findName(item)
 
     def findIDWithName(self, item):
+
+        '''
+        This function finds the ID of object, with objects name
+        :param item: The name
+        :return: The ID of the object
+        '''
+
         return self.__repository.findIDWithName(item)
 
     def findNameWithID(self, item):
+
+        '''
+        This function finds the name of object, with objects ID
+        :param item: The ID
+        :return: The name of the object
+        '''
+
         return self.__repository.findNameWithID(item)
 
     def listByID(self, item):
-        self.__repository.listByID(item)
+
+        '''
+        This function searches for an object with ID item
+        :param item: The ID
+        :return: The object
+        '''
+
+        return self.__repository.listByID(item)
 
     def listByName(self, item):
-        self.__repository.listByName(item)
+
+        '''
+        This function searches for an object with name item
+        :param item: The name
+        :return: The objects
+        '''
+
+        return self.__repository.listByName(item)
 
     def getAll(self):
+
+        '''
+        :return: The repository
+        '''
+
         return self.__repository.getAll()
 
     def __str__(self):
@@ -73,22 +141,63 @@ class gradeRepositoryController:
         self.__undo = undoController
 
     def add(self, item):
+
+        '''
+        This function adds the new object to the repository of grades
+        Also prepares the undo and redo functions
+        :param item: object which we want to add
+        '''
+
         self.__repository.add(item)
         redo = FunctionCall(self.add, item)
-        undo = FunctionCall(self.removeByStudent, item.getStudentID())
+        undo = FunctionCall(self.removeLast, item.getStudentID())
         operation = Operation(redo, undo)
         self.__undo.recordOperation(operation)
 
     def find(self, item):
+        '''
+        Check the position of the item
+        :param item: The ID of the item we are looking for
+        :return: The position of the item
+        '''
+
         return self.__repository.find(item)
 
+    def removeLast(self, item):
+
+        '''
+        This function removes the las element of the repository
+        :param item: The ID of object
+        '''
+
+        self.__repository.removeLast(item)
+
     def removeByStudent(self, item):
+
+        '''
+        This function removes from the reposoitory by students ID
+        :param item: ID
+        '''
+
         self.__repository.removeByStudent(item)
 
     def removeByDiscipline(self, ID):
+
+        '''
+        This function removes from the reposoitory by disciplines ID
+        :param item: ID
+        '''
+
         self.__repository.removeByDiscipline(ID)
 
     def findByDisciplineID(self, ID):
+
+        '''
+        This function find all the students enroled at the discipline with ID ID
+        :param ID: ID of the discipline
+        :return: a string with the students
+        '''
+
         return self.__repository.findByDisciplineID(ID)
 
     def getAll(self):

@@ -4,21 +4,24 @@ from domain.classes import *
 from controller.statisticController import *
 from controller.Statistics import *
 from controller.undoController import *
+from repository.studentsFileRepository import *
+from repository.disciplinesFileRepository import *
+from repository.gradesFileRepository import *
 
 class UI:
 
     def printMenu(self):
         
-        string = "\n \t        ~MENU~"
-        string += "\n \t 1. Add a new student."
-        string += "\n \t 2. Add a new discipline"
-        string += "\n \t 3. Remove a student."
-        string += "\n \t 4. Remove a discipline."
-        string += "\n \t 5. Update a student."
-        string += "\n \t 6. Update a discipline."
-        string += "\n \t 7. Add a grade."
-        string += "\n \t 8. Search a student by ID."
-        string += "\n \t 9. Search a student by name."
+        string = "\n \t         ~MENU~ \n"
+        string += "\n \t  1. Add a new student."
+        string += "\n \t  2. Add a new discipline"
+        string += "\n \t  3. Remove a student."
+        string += "\n \t  4. Remove a discipline."
+        string += "\n \t  5. Update a student."
+        string += "\n \t  6. Update a discipline."
+        string += "\n \t  7. Add a grade."
+        string += "\n \t  8. Search a student by ID."
+        string += "\n \t  9. Search a student by name."
         string += "\n \t 10. Search a discipline by ID."
         string += "\n \t 11. Search a discipline by name."
         string += "\n \t 12. Sort students enroled at a discipline alphabetically."
@@ -31,7 +34,7 @@ class UI:
         string += "\n \t 19. Print students."
         string += "\n \t 20. Print disciplines."
         string += "\n \t 21. Print grades."
-        string += "\n \t 0. Exit."
+        string += "\n \t  0. Exit."
         print(string)
 
 
@@ -42,16 +45,24 @@ class UI:
         gradeRepo = gradeRepository()
 
         undoController = undo()
+        undoController.newOperation()
+
+        studentFile = studentsFileRepository(studentRepo)
+        studentFile.readFromStudentsFile()
+
+        disciplineFile = disciplinesFileRepository(disciplineRepo)
+        disciplineFile.readFromDisciplinesFile()
+
+        gradeFile = gradesFileRepository(gradeRepo)
+        gradeFile.readFromGradesFile()
+
         student = repositoryController(studentRepo, undoController, gradeRepo)
         discipline = repositoryController(disciplineRepo, undoController, gradeRepo)
         grade = gradeRepositoryController(gradeRepo, studentRepo, disciplineRepo, undoController)
 
-
         command = -1
 
         U = UI()
-
-        U.readFromFiles(student, discipline, grade,undoController)
 
         k = 0
 
@@ -76,6 +87,7 @@ class UI:
                     if student.find(x.getID()) == 0:
                         undoController.newOperation()
                         student.add(x)
+                        studentFile.writeToStudentsFile()
                         print("\n \t The student has been added !")
                     else: print("\n Student already exists !")
                 except: pass
@@ -86,6 +98,7 @@ class UI:
                     if discipline.find(x.getID()) == 0:
                         undoController.newOperation()
                         discipline.add(x)
+                        disciplineFile.writeToDisciplinesFile()
                         print("\n \t The discipline has been added !")
                     else: print("\n Discipline already exists !")
                 except: pass
@@ -96,6 +109,8 @@ class UI:
                     undoController.newOperation()
                     student.remove(x.getID())
                     grade.removeByStudent(x.getID())
+                    studentFile.deleteFromStudentsFile(x.getID())
+                    gradeFile.deleteFromGradesFile(x.getID())
                     print("\n \t The student has been removed !")
                 else: print("\n The student does not exist !")
 
@@ -105,6 +120,8 @@ class UI:
                     undoController.newOperation()
                     grade.removeByDiscipline(x.getID())
                     discipline.remove(x.getID())
+                    disciplineFile.deleteFromDisciplinesFile(x.getID())
+                    gradeFile.deleteFromGradesFile(x.getID())
                     print("\n \t The discipline has been removed !")
                 else: print("\n The discipline does not exist !")
 
@@ -130,6 +147,7 @@ class UI:
                     if student.find(x.getStudentID()) != 0 and discipline.find(x.getDisciplineID()) != 0:
                         undoController.newOperation()
                         grade.add(x)
+                        gradeFile.writeToGradesFile()
                         print("\n \t Grade has been added !")
                     else: print("\n Invalid data !")
                 else: print("\n Invalid data !")
@@ -139,7 +157,7 @@ class UI:
                 if x.getID() != 0:
                     if student.find(x.getID()) != 0:
                         print('\n')
-                        student.listByID(x.getID())
+                        print(student.listByID(x.getID()))
                     else: print("\n Invalid data !")
                 else: print("\n Invalid data !")
 
@@ -147,7 +165,7 @@ class UI:
                 x = U.readStudentName()
                 if student.findName(x.getName()) != 0:
                     print('\n')
-                    student.listByName(x.getName())
+                    print(student.listByName(x.getName()))
                 else: print("\n Invalid data !")
 
             elif command == '10':
@@ -283,35 +301,3 @@ class UI:
 
         name = input("\n \t Discipline name: ")
         return Discipline(0, name)
-
-    def readFromFiles(self, student, discipline, grade,undo):
-
-        '''
-        This function reads from files students, disciplines and grades, and add them into
-        students, disciplines and grades repositories
-        '''
-
-        undo.newOperation()
-        studentFile = open("Students.txt", 'r')
-        line = studentFile.readline().strip()
-        while line != "":
-            lx = line.split(',')
-            student.add(Student(int(lx[0]), str(lx[1])))
-            line = studentFile.readline().strip()
-        studentFile.close()
-
-        disciplineFile = open("Disciplines.txt", 'r')
-        line = disciplineFile.readline().strip()
-        while line != "":
-            lx = line.split(',')
-            discipline.add(Discipline(int(lx[0]), str(lx[1])))
-            line = disciplineFile.readline().strip()
-        disciplineFile.close()
-
-        gradeFile = open("Grades.txt", 'r')
-        line = gradeFile.readline().strip()
-        while line != "":
-            lx = line.split(',')
-            grade.add(Grade(int(lx[0]), int(lx[1]), int(lx[2])))
-            line = gradeFile.readline().strip()
-        gradeFile.close()

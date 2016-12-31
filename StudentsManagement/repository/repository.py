@@ -111,8 +111,11 @@ class Repository:
         Prints the items with the ID item
         '''
 
+        s = ''
         for i in self._data:
-            if item == i.getID(): print('     ID: ',i.getID(),'    Name: ',i.getName())
+            if item == i.getID():
+                s += '     ID: ' + str(i.getID()) + '    Name: ' + str(i.getName()) + '\n'
+        return s
 
     def listByName(self, item):
 
@@ -120,8 +123,11 @@ class Repository:
         Prints the items with the name item
         '''
 
+        s = ''
         for i in self._data:
-            if item in i.getName(): print('     ID: ',i.getID(),'    Name: ',i.getName())
+            if item in i.getName():
+                s += '     ID: ' + str(i.getID()) + '    Name: ' + str(i.getName()) + '\n'
+        return s
 
     def getAll(self):
 
@@ -169,6 +175,17 @@ class gradeRepository():
 
         for i in self._data:
             if item == i.getID(): return i
+
+    def removeLast(self, ID):
+
+        '''
+        Removes an item by a student ID
+        '''
+
+        for i in self._data:
+            if ID == i.getStudentID():
+                k = i
+        self._data.remove(k)
 
     def removeByStudent(self, ID):
 
