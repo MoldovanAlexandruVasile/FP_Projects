@@ -7,6 +7,9 @@ from controller.undoController import *
 from repository.studentsFileRepository import *
 from repository.disciplinesFileRepository import *
 from repository.gradesFileRepository import *
+from repository.studentsPickleFileRepository import *
+from repository.disciplinesPickleFileRepository import *
+from repository.gradesPickleFileRepository import *
 
 class UI:
 
@@ -47,14 +50,33 @@ class UI:
         undoController = undo()
         undoController.newOperation()
 
-        studentFile = studentsFileRepository(studentRepo)
-        studentFile.readFromStudentsFile()
+        command = -1
 
-        disciplineFile = disciplinesFileRepository(disciplineRepo)
-        disciplineFile.readFromDisciplinesFile()
+        print('\n \t How would you like to work?')
+        print('\n \t 1. Pickle files.')
+        print('\n \t 2. Text files.\n ')
 
-        gradeFile = gradesFileRepository(gradeRepo)
-        gradeFile.readFromGradesFile()
+        command = input("\n Your command: ")
+
+        if command == '1':
+            studentFile = studentsPickleFileRepository(studentRepo)
+            studentFile.readFromStudentsFile()
+
+            disciplineFile = disciplinesPickleFileRepository(disciplineRepo)
+            disciplineFile.readFromDisciplinesFile()
+
+            gradeFile = gradesPickleFileRepository(gradeRepo)
+            gradeFile.readFromGradesFile()
+
+        if command == '2':
+            studentFile = studentsFileRepository(studentRepo)
+            studentFile.readFromStudentsFile()
+
+            disciplineFile = disciplinesFileRepository(disciplineRepo)
+            disciplineFile.readFromDisciplinesFile()
+
+            gradeFile = gradesFileRepository(gradeRepo)
+            gradeFile.readFromGradesFile()
 
         student = repositoryController(studentRepo, undoController, gradeRepo)
         discipline = repositoryController(disciplineRepo, undoController, gradeRepo)
@@ -130,6 +152,7 @@ class UI:
                 if student.find(x.getID()) != 0:
                     undoController.newOperation()
                     student.update(x)
+                    studentFile.writeToStudentsFile()
                     print("\n \t Updated !")
                 else: print("\n The student does not exist !")
                 
@@ -138,6 +161,7 @@ class UI:
                 if discipline.find(x.getID()) != 0:
                     undoController.newOperation()
                     discipline.update(x)
+                    disciplineFile.writeToDisciplinesFile()
                     print("\n \t Updated !")
                 else: print("\n The discipline does not exist !")
                 

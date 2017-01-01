@@ -1,12 +1,13 @@
-2150,  Antal Victor
-3512,  Moldovanu Tudor
-812,  Muresan Paul
-150,  Pruneanu Rares
-523,  Brinzuca Ioana Diana
-102,  Pilca Alina Mihaela
-315,  Parnut Ioan Simion
-3514,  Soaita Andreea
-51,  Soaita Diana Maria
-70,  Moldovan Adrian
-101,  Gligor Violeta
-999,  Fulica Razvan
+2172,     Moldovan Alexandru Vasile
+2150,       Antal Victor
+3512,       Moldovanu Tudor
+812,       Muresan Paul
+150,       Pruneanu Rares
+523,       Brinzuca Ioana Diana
+102,       Pilca Alina Mihaela
+315,       Parnut Ioan Simion
+3514,       Soaita Andreea
+51,       Soaita Diana Maria
+70,       Moldovan Adrian
+101,       Gligor Violeta
+999,       Fulica Razvan
