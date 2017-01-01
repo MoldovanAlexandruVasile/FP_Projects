@@ -10,7 +10,7 @@ class gradesPickleFileRepository:
     def readFromGradesFile(self):
 
         '''
-        This function reads from a students pickle file the existing students
+        This function reads from a grades pickle file the existing grades
         '''
 
         f = open('GradesPickle.pickle', "rb")
@@ -24,7 +24,7 @@ class gradesPickleFileRepository:
     def writeToGradesFile(self):
 
         '''
-        This function writes in the students pickle file the added students in the program
+        This function writes in the grades pickle file the added grades in the program
         '''
 
         s = []
@@ -38,7 +38,7 @@ class gradesPickleFileRepository:
     def deleteFromGradesFile(self, item):
 
         '''
-        This function removes a student from Students.txt
+        This function removes a grade from grades pickle file
         :param item: is the ID of object we want to delete
         '''
 

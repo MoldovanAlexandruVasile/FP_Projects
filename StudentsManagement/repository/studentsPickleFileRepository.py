@@ -38,7 +38,7 @@ class studentsPickleFileRepository:
     def deleteFromStudentsFile(self, item):
 
         '''
-        This function removes a student from Students.txt
+        This function removes a student from students pickle file
         :param item: is the ID of object we want to delete
         '''
 

@@ -10,7 +10,7 @@ class disciplinesPickleFileRepository:
     def readFromDisciplinesFile(self):
 
         '''
-        This function reads from a students pickle file the existing students
+        This function reads from a disciplines pickle file the existing students
         '''
 
         f = open('DisciplinesPickle.pickle', "rb")
@@ -24,7 +24,7 @@ class disciplinesPickleFileRepository:
     def writeToDisciplinesFile(self):
 
         '''
-        This function writes in the students pickle file the added students in the program
+        This function writes in the disciplines pickle file the added students in the program
         '''
 
         s = []
@@ -38,7 +38,7 @@ class disciplinesPickleFileRepository:
     def deleteFromDisciplinesFile(self, item):
 
         '''
-        This function removes a student from Students.txt
+        This function removes a disciplines from discipline pickle file
         :param item: is the ID of object we want to delete
         '''
 
