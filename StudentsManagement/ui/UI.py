@@ -197,7 +197,7 @@ class UI:
                 if x.getID() != 0:
                     if discipline.find(x.getID()) != 0:
                         print('\n')
-                        discipline.listByID(x.getID())
+                        print(discipline.listByID(x.getID()))
                     else: print("\n Invalid data !")
                 else: print("\n Invalid data !")
 
@@ -205,7 +205,7 @@ class UI:
                 x = U.readDisciplineName()
                 if discipline.findName(x.getName()) != 0:
                     print('\n')
-                    discipline.listByName(x.getName())
+                    print(discipline.listByName(x.getName()))
                 else: print("\n Invalid data !")
 
 
