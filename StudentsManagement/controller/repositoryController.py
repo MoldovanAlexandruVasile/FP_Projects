@@ -45,19 +45,17 @@ class repositoryController:
         '''
 
         previous = self.__repository.find(item)
-        self.__repository.remove(item)
         list = self.__grades.getStudentGrades(item)
+        self.__repository.remove(item)
         redo = FunctionCall(self.remove, item)
         undo = FunctionCall(self.add, previous)
         operation = Operation(redo, undo)
         self.__undoController.recordOperation(operation)
-        i = 1
-        while i < len(list):
-            redo = FunctionCall(self.__grades.removeByStudent, list[i])
-            undo = FunctionCall(self.__grades.add, list[i])
+        for i in list:
+            redo = FunctionCall(self.__grades.removeByStudent, i)
+            undo = FunctionCall(self.__grades.add, i)
             operation = Operation(redo, undo)
             self.__undoController.recordOperation(operation)
-            i += 1
 
     def find(self, item):
 
@@ -174,27 +172,14 @@ class gradeRepositoryController:
 
         self.__repository.removeLast(item)
 
-    def removeByStudent(self, item):
+    def removeByStudent(self, ID):
 
         '''
         This function removes from the reposoitory by students ID
         :param item: ID
         '''
 
-        previous = self.__repository.find(item)
-        self.__repository.removeByStudent(item)
-        list = self.__repository.getStudentGrades(item)
-        redo = FunctionCall(self.removeByStudent, item)
-        undo = FunctionCall(self.add, previous)
-        operation = Operation(redo, undo)
-        self.__undoController.recordOperation(operation)
-        i = 1
-        while i < len(list):
-            redo = FunctionCall(self.__repository.removeByStudent, i)
-            undo = FunctionCall(self.__repository.add, i)
-            operation = Operation(redo, undo)
-            self.__undoController.recordOperation(operation)
-            i += 1
+        self.__repository.removeByStudent(ID)
 
     def removeByDiscipline(self, ID):
 
