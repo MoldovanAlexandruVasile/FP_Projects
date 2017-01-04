@@ -30,7 +30,7 @@ class disciplinesFileRepository:
         disciplineFile = open("Disciplines.txt", "w")
         try:
             for i in self.__repository._data:
-                s = str(i.getID()) + ', ' + str(i.getName()) + '\n'
+                s = str(i.getID()) + ',' + str(i.getName()) + '\n'
                 disciplineFile.write(s)
             disciplineFile.close()
         except Exception as e: print('\t \n', e)
@@ -46,7 +46,7 @@ class disciplinesFileRepository:
         try:
             for i in self.__repository._data:
                 if item != i.getID():
-                    s = str(i.getID()) + ', ' + str(i.getName()) + '\n'
+                    s = str(i.getID()) + ',' + str(i.getName()) + '\n'
                     disciplineFile.write(s)
             disciplineFile.close()
         except Exception as e: print('\t \n', e)

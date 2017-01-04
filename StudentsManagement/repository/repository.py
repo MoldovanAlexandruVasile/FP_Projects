@@ -174,7 +174,7 @@ class gradeRepository():
         '''
 
         for i in self._data:
-            if item == i.getID(): return i
+            if item == i.getStudentID(): return i
 
     def removeLast(self, ID):
 
@@ -222,13 +222,20 @@ class gradeRepository():
                 list.append(i)
         return list
 
+    def getDisciplineGrades(self, ID):
+        list = []
+        for i in self._data:
+            if i.getDisciplineID() == ID:
+                list.append(i)
+        return list
+
     def getAll(self):
 
         '''
         Returns the repository
         '''
         
-        return self._data;
+        return self._data
 
     def __len__(self):
 

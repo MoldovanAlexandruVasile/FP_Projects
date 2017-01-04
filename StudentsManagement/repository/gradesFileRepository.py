@@ -31,7 +31,7 @@ class gradesFileRepository:
         gradeFile = open("Grades.txt", "w")
         try:
             for i in self.__repository._data:
-                s = str(i.getDisciplineID()) + ', ' + str(i.getStudentID()) + ', ' + str(i.getGradeValue()) + '\n'
+                s = str(i.getDisciplineID()) + ',' + str(i.getStudentID()) + ',' + str(i.getGradeValue()) + '\n'
                 gradeFile.write(s)
             gradeFile.close()
         except Exception as e: print('\t \n', e)
@@ -47,7 +47,7 @@ class gradesFileRepository:
         try:
             for i in self.__repository._data:
                 if i.getStudentID() != item:
-                    s = str(i.getDisciplineID()) + ', ' + str(i.getStudentID()) + ', ' + str(i.getGradeValue()) + '\n'
+                    s = str(i.getDisciplineID()) + ',' + str(i.getStudentID()) + ',' + str(i.getGradeValue()) + '\n'
                     gradeFile.write(s)
             gradeFile.close()
         except Exception as e: print('\t \n', e)

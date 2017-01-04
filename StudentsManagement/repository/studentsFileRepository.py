@@ -31,7 +31,7 @@ class studentsFileRepository:
         studentFile = open("Students.txt", "w")
         try:
             for i in self.__repository._data:
-                s = str(i.getID()) + ', ' + str(i.getName()) + '\n'
+                s = str(i.getID()) + ',' + str(i.getName()) + '\n'
                 studentFile.write(s)
             studentFile.close()
         except Exception as e: print('\t \n', e)
@@ -47,7 +47,7 @@ class studentsFileRepository:
         try:
             for i in self.__repository._data:
                 if item != i.getID():
-                    s = str(i.getID()) + ', ' + str(i.getName()) + '\n'
+                    s = str(i.getID()) + ',' + str(i.getName()) + '\n'
                     studentFile.write(s)
             studentFile.close()
         except Exception as e: print('\t \n', e)

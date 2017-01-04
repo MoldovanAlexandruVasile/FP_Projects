@@ -101,7 +101,9 @@ class UI:
             
             command = input("\n Your command: ")
 
-            if command == '0': break
+            if command == '0':
+                print('\n \t Have a nice day ! (^_^)')
+                break
 
             elif command == '1':
                 x = U.readStudent()
@@ -222,12 +224,18 @@ class UI:
             elif command == '17':
                 if undoController._index <= len(undoController._operations) - 2:
                     undoController.redo()
+                    studentFile.writeToStudentsFile()
+                    disciplineFile.writeToDisciplinesFile()
+                    gradeFile.writeToGradesFile()
                     print("\n \t Redo done !")
                 else: print("\n \t You can't redo !")
 
             elif command == '18':
                 if undoController._index != 0:
                     undoController.undo()
+                    studentFile.writeToStudentsFile()
+                    disciplineFile.writeToDisciplinesFile()
+                    gradeFile.writeToGradesFile()
                     print("\n \t Undo done !")
                 else: print("\n \t You can't undo !")
 

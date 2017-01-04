@@ -51,11 +51,13 @@ class repositoryController:
         undo = FunctionCall(self.add, previous)
         operation = Operation(redo, undo)
         self.__undoController.recordOperation(operation)
-        for i in list:
-            redo = FunctionCall(self.__grades.removeByStudent, i)
-            undo = FunctionCall(self.__grades.add, i)
+        i = 1
+        while i < len(list):
+            redo = FunctionCall(self.__grades.removeByStudent, list[i])
+            undo = FunctionCall(self.__grades.add, list[i])
             operation = Operation(redo, undo)
             self.__undoController.recordOperation(operation)
+            i += 1
 
     def find(self, item):
 
@@ -138,7 +140,7 @@ class gradeRepositoryController:
         self.__repository = repository
         self.__student = student
         self.__discipline = discipline
-        self.__undo = undoController
+        self.__undoController = undoController
 
     def add(self, item):
 
@@ -152,7 +154,7 @@ class gradeRepositoryController:
         redo = FunctionCall(self.add, item)
         undo = FunctionCall(self.removeLast, item.getStudentID())
         operation = Operation(redo, undo)
-        self.__undo.recordOperation(operation)
+        self.__undoController.recordOperation(operation)
 
     def find(self, item):
         '''
@@ -179,7 +181,20 @@ class gradeRepositoryController:
         :param item: ID
         '''
 
+        previous = self.__repository.find(item)
         self.__repository.removeByStudent(item)
+        list = self.__repository.getStudentGrades(item)
+        redo = FunctionCall(self.removeByStudent, item)
+        undo = FunctionCall(self.add, previous)
+        operation = Operation(redo, undo)
+        self.__undoController.recordOperation(operation)
+        i = 1
+        while i < len(list):
+            redo = FunctionCall(self.__repository.removeByStudent, i)
+            undo = FunctionCall(self.__repository.add, i)
+            operation = Operation(redo, undo)
+            self.__undoController.recordOperation(operation)
+            i += 1
 
     def removeByDiscipline(self, ID):
 
