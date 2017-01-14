@@ -11,3 +11,10 @@
 70,Moldovan Adrian
 101,Gligor Violeta
 999,Fulica Razvan
+100,Grigore Vasile
+105,Albaniuc Razvan
+970,Onciu Larisa
+971,Harsan Diana
+810,Leordean Patricia
+500,Rusu Stefania Madalina
+609,Bodiu Catalin

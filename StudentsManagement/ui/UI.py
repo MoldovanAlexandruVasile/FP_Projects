@@ -1,5 +1,5 @@
 from repository.repository import *
-from controller.repositoryController import *
+from controller.Controller import *
 from domain.classes import *
 from controller.statisticController import *
 from controller.Statistics import *
@@ -43,22 +43,20 @@ class UI:
 
     def mainMenu(self):
 
-        studentRepo = Repository()
-        disciplineRepo = Repository()
+        studentRepo = studentRepository()
+        disciplineRepo = disciplineRepository()
         gradeRepo = gradeRepository()
 
         undoController = undo()
         undoController.newOperation()
 
-        command = -1
+        U = UI()
 
-        print('\n \t How would you like to work?')
-        print('\n \t 1. Pickle files.')
-        print('\n \t 2. Text files.\n ')
+        command = U.readFromSettingsFile()
 
-        command = input("\n Your command: ")
+        sem = True
 
-        if command == '1':
+        if command == 'binaryfiles':
             studentFile = studentsPickleFileRepository(studentRepo)
             studentFile.readFromStudentsFile()
 
@@ -68,7 +66,7 @@ class UI:
             gradeFile = gradesPickleFileRepository(gradeRepo)
             gradeFile.readFromGradesFile()
 
-        if command == '2':
+        elif command == 'inmemory':
             studentFile = studentsFileRepository(studentRepo)
             studentFile.readFromStudentsFile()
 
@@ -78,17 +76,22 @@ class UI:
             gradeFile = gradesFileRepository(gradeRepo)
             gradeFile.readFromGradesFile()
 
-        student = repositoryController(studentRepo, undoController, gradeRepo)
-        discipline = repositoryController(disciplineRepo, undoController, gradeRepo)
+        else:
+            print('\n \t Invalid settings !')
+            print('\n \t Change the settings in valid ones !')
+            print('\n \t Have a nice day ! (^_^)')
+            sem = False
+
+
+        student = studentController(studentRepo, undoController, gradeRepo)
+        discipline = disciplineController(disciplineRepo, undoController, gradeRepo)
         grade = gradeRepositoryController(gradeRepo, studentRepo, disciplineRepo, undoController)
 
         command = -1
 
-        U = UI()
-
         k = 0
 
-        while command != 0:
+        while command != 0 and sem == True:
 
             x = statisticController(student, discipline, grade)
             statistics = Statistics(x)
@@ -142,8 +145,8 @@ class UI:
                 x = U.readDisciplineID()
                 if discipline.find(x.getID()) != 0:
                     undoController.newOperation()
-                    grade.removeByDiscipline(x.getID())
                     discipline.remove(x.getID())
+                    grade.removeByDiscipline(x.getID())
                     disciplineFile.deleteFromDisciplinesFile(x.getID())
                     gradeFile.deleteFromGradesFile(x.getID())
                     print("\n \t The discipline has been removed !")
@@ -333,3 +336,17 @@ class UI:
 
         name = input("\n \t Discipline name: ")
         return Discipline(0, name)
+
+    def readFromSettingsFile(self):
+
+        '''
+        This function reads from Settings.txt file the current settings
+        '''
+
+        try:
+            settingsFile = open("Settings.txt", "r")
+            line = settingsFile.readline().strip()
+            lx = line.split('=')
+            settingsFile.close()
+            return lx[1]
+        except IOError: pass

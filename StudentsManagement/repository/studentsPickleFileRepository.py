@@ -1,5 +1,5 @@
 import pickle
-from controller.repositoryController import *
+from controller.Controller import *
 from domain.classes import *
 
 class studentsPickleFileRepository:

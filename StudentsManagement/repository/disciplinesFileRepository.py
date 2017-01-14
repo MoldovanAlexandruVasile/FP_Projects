@@ -1,4 +1,4 @@
-from controller.repositoryController import *
+from controller.Controller import *
 from domain.classes import *
 
 class disciplinesFileRepository:
@@ -27,6 +27,7 @@ class disciplinesFileRepository:
         '''
         This function writes in Disciplines.txt the added discipline in the program
         '''
+
         disciplineFile = open("Disciplines.txt", "w")
         try:
             for i in self.__repository._data:
